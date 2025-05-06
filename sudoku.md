@@ -6,19 +6,19 @@ Une premiètre utilisation de l'algorithme wfc est de réoudre des sudokus
 
 ### Bases
 
-```
+```python
 class Sudoku:
     grid:           list
     possibilities:  list
 ```
 Ici `grid` est une liste 2-dimensionelle pour stocker les nombres placés dans notre sudoku.
-```
+```python
 grid =[[None for _ in range(9)] for _ in range(9)]
 ```
 
 `possibilities` est une liste 3 dimensionelle ou on pourra stocker les choix possibles pour une case vide
 
-```
+```python
 possibilities = [[[i for i in range(9)] for _ in range(9)] for _ in range(9)]
 ```
 
@@ -27,7 +27,7 @@ possibilities = [[[i for i in range(9)] for _ in range(9)] for _ in range(9)]
 Plusieur fonctions pour vérifier la validité du sudoku selon les règles ordinires du jeux
 
 - Lignes
-```
+```python
 def check_line(self, n):
     line = self.grid[n]
     for i in range(len(line)):
@@ -47,7 +47,7 @@ def check_lines(self):
 ```
 
 - Colonnes
-```
+```python
 def check_col(self, n):
     g = self.grid
     for i in range(9):
@@ -67,7 +67,7 @@ def check_cols(self):
 ```
 
 - Cases 3x3
-```
+```python
 def getbox_L(self, x , y):
     g = self.grid
     L = []
@@ -101,7 +101,7 @@ Cette fonction parcours les cases vides en essayand d'y placer les différent ch
 
 Si le placement d'un chiffre n'invalide pas le sudoku, il est rajouté dans la liste de chiffres possibles pour la case en question.
 
-```
+```python
 def update_possibilities(self):
     g = self.grid
     p = self.possibilities
@@ -128,7 +128,7 @@ def update_possibilities(self):
     - Si une case n'a qu'une seule posibilité, completer cette case.
 3) Si aucune case n'a été modifié, s'arreter. Sinon, repasser a l'étape **1**.
 
-```
+```python
 def wfc_stop(S: Sudoku):
     if S.check() == False:
         print("Invalid Sudoku")
