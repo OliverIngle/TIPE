@@ -1,8 +1,15 @@
 
-
+import random
 from PIL.Image import new
 from numpy import positive
 
+gap_txt = ""
+for i in range(100):
+    gap_txt += "\n"
+
+def gap():
+    _ = input()
+    print(gap_txt)
 
 class Sudoku:
     grid =[[None for _ in range(9)] for _ in range(9)]
@@ -13,7 +20,7 @@ class Sudoku:
         for l in self.grid:
             for elm in l:
                 if elm == None:
-                    s += "N "
+                    s += ". "
                 else:
                     s += f"{elm} "
             s += "\n"
@@ -129,7 +136,6 @@ def wfc_stop(S: Sudoku):
     flag = True
     while flag:
         flag = False
-        S.update_possibilities()
         for i in range(9):
             for j in range(9):
                 if S.grid[i][j] != None:
@@ -137,13 +143,25 @@ def wfc_stop(S: Sudoku):
                 p = S.possibilities[i][j]
                 if len(p) == 1:
                     S.set_tile(i, j, p[0])
-                    print("colapsing", i, j)
                     flag = True
+        S.update_possibilities()
+        S.display()                         #---------
+        S.display_numof_possibilities()     #---------
+        gap()
+            
+def wfc_rand(S: Sudoku):
+    if S.check() == False:
+        print("Invalid Sudoku")
+        return
+    flag = True
+    while flag:
 
-    print("Stopped")
+        S.update_possibilities()
+        S.display()                         #---------
+        S.display_numof_possibilities()     #---------
+        gap()
             
-            
-# ------------------------------
+# ------------------------------ Tests Initials
 
 
 
@@ -165,12 +183,12 @@ def wfc_stop(S: Sudoku):
 # S.display()
 # S.display_numof_possibilities()
 
-# --------------------------------------------------------------------
+# --------------------------- Exemple 1 ---------------------------------------
 
 # N = None
-# S = Sudoku()
+# S1 = Sudoku()
 
-# S.grid = [
+# S1.grid = [
 #         [N, N, N,   N, N, N,   0, N, N],
 #         [N, N, N,   N, N, N,   N, N, N],
 #         [N, N, N,   N, N, N,   N, N, N],
@@ -184,49 +202,121 @@ def wfc_stop(S: Sudoku):
 #         [N, N, N,   N, N, N,   7, 8, N]
 # ]
         
-# S.update_possibilities()
+# S1.update_possibilities()
 
-# print(S.check())
-# S.display()
-# S.display_numof_possibilities()
+# gap()
+
+# S1.display()
+# S1.display_numof_possibilities()
+
+# gap()
+
+# wfc_stop(S1)
 
 
+# S1.display()
+# S1.display_numof_possibilities()
 
-# wfc_stop(S)
+# ------------------------- Exemple 2 -------------------------------------
 
-# S.display()
-# S.display_numof_possibilities()
+# gap()
+# S2 = Sudoku()
+# N = None
+# S2.grid = [
+#         [N, 1, N,   N, N, N,   6, N, 0],
+#         [0, 4, N,   N, N, 2,   1, N, N],
+#         [N, N, 5,   4, N, N,   N, 8, N],
 
-# ---------------------------------------------------------------------------
-S = Sudoku()
+#         [1, N, 4,   2, 3, N,   8, N, N],
+#         [3, N, 0,   8, N, N,   N, 2, N],
+#         [N, N, N,   N, 6, 0,   5, N, 4],
+
+#         [N, N, N,   0, N, N,   3, N, N],
+#         [4, 3, N,   N, N, 6,   N, N, 7],
+#         [7, N, 6,   N, N, N,   N, 5, 2]
+# ]
+
+# S2.update_possibilities()
+
+# S2.display()
+# S2.display_numof_possibilities()
+
+# gap()
+
+# wfc_stop(S2)
+
+
+# S2.display()
+# S2.display_numof_possibilities()
+
+# --------- Exemple 3 ----------
+
+# gap()
+# S3 = Sudoku()
+# N = None
+# S3.grid = [
+#         [N, 1, N,   N, N, N,   6, N, 0],
+#         [0, 4, N,   N, N, 2,   1, N, N],
+#         [N, N, 5,   4, N, N,   N, 8, N],
+
+#         [1, N, 4,   N, 3, N,   8, N, N],
+#         [3, N, 0,   8, N, N,   N, 2, N],
+#         [N, N, N,   N, 6, 0,   N, N, 4],
+
+#         [N, N, N,   0, N, N,   3, N, N],
+#         [4, 3, N,   N, N, 6,   N, N, 7],
+#         [7, N, 6,   N, N, N,   N, 5, 2]
+# ]
+
+# S3.update_possibilities()
+
+# S3.display()
+# S3.display_numof_possibilities()
+
+# gap()
+
+# wfc_stop(S3)
+
+
+# S3.display()
+# S3.display_numof_possibilities()
+
+# --------------- Exemple 4 -----------
+
 N = None
-S.grid = [
-        [1, N, 4,   3, 5, 7,   6, 8, 9],
-        [3, 7, 9,   6, 8, N,   4, 2, N],
-        [6, N, 5,   N, 4, 9,   N, 3, 1],
+S1 = Sudoku()
 
-        [5, 1, 8,   7, N, 4,   2, 9, 6],
-        [7, 4, N,   N, 9, 6,   N, 1, N],
-        [9, N, 6,   1, 2, 5,   8, 4, 7],
+S1.grid = [
+        [N, N, N,   N, N, N,   0, N, N],
+        [N, N, N,   N, N, N,   N, N, N],
+        [N, N, N,   N, N, N,   N, N, N],
 
-        [8, 5, 1,   4, N, 3,   9, 6, N],
-        [4, 6, 7,   9, 1, 2,   3, N, 8],
-        [N, 9, 3,   5, N, 8,   N, 7, 4]
+        [N, N, N,   N, N, N,   N, N, N],
+        [N, N, N,   N, N, N,   N, 0, N],
+        [N, N, N,   N, N, N,   N, N, N],
+
+        [0, N, N,   N, N, N,   N, N, N],
+        [N, N, N,   0, N, N,   N, N, N],
+        [N, N, N,   N, N, N,   N, N, N]
 ]
+        
+S1.update_possibilities()
 
-S.update_possibilities()
+gap()
 
-print(S.check())
-S.display()
-S.display_numof_possibilities()
+S1.display()
+S1.display_numof_possibilities()
+
+gap()
+
+wfc_stop(S1)
 
 
+S1.display()
+S1.display_numof_possibilities()
 
-wfc_stop(S)
 
-S.display()
-S.display_numof_possibilities()
-
+# ------  GRILLE DE BASE -------------
 # N = None
 # S.grid = [
 #         [N, N, N,   N, N, N,   N, N, N],
