@@ -206,3 +206,9 @@ def wfc_stop(S: Sudoku):
 ```
 
 
+## Questions a approfondir?
+
+- Dans le cas ou il n'y a aucun choix 'sur'(ie une entropie de 1), est il toujours meilleur de choisir aléatoirement dans la case qui a les moin d'entropie?
+
+
+
