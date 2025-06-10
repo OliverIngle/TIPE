@@ -118,7 +118,17 @@ class Sudoku:
                     continue
                 self.place_and_reduce(i, j, x)
 
-def wfc(S):
+    def number_of_completed(self):
+        possibles = [i for i in range(self.s)]
+        completed = 0
+        for line in self.grid:
+            for el in line:
+                if el in possibles:
+                    completed += 1
+        return completed
+
+
+def wfc_min_entropy(S):
     s = S.s
     tag = True
     contraditcion = False
@@ -161,45 +171,44 @@ def wfc(S):
     return not contraditcion
 
 
+def wfc_max_entropy(S):
+    s = S.s
+    tag = True
+    contraditcion = False
+    while tag:
+        tag = False
+        max_entropy = 2
+        max_entropy_coords = []
+        for i in range(s):
+            for j in range(s):
+                entropies = S.entropies[i][j]
+                n_entropies = len(entropies)
+                if n_entropies == 0:
+                    if S.grid[i][j] == None:
+                        S.force_place(i, j, "\033[31;1mC\033[0m")
+                        contraditcion = True
+                    continue
+                elif n_entropies == 1:
+                    S.place_and_reduce(i, j, entropies[0])
+                    tag = True
+                    break
+                elif n_entropies == max_entropy:
+                    max_entropy_coords.append((i, j))
+                elif n_entropies > max_entropy:
+                    max_entropy = n_entropies
+                    max_entropy_coords = [(i, j)]
+            if tag or contraditcion:
+                break
+        if tag or max_entropy_coords == [] or contraditcion:
+            # S.update_view()
+            continue
+        r = random.randint(0, len(max_entropy_coords) - 1)
+        (x, y) = max_entropy_coords[r]
+        r2 = random.randint(0, max_entropy - 1)
+        el = S.entropies[x][y][r2]
+        S.place_and_reduce(x, y, el)
+        tag = True
+        # input()
+        # S.update_view()
 
-
-
-# ---- None marker ----
-N = None
-# ---- ----------- ----
-
-# --------------------- Test 1 ----------------------
-
-# S1 = Sudoku(2)
-# # print(S1.grid)
-# # print(S1.entropies)
-
-# # S1.force_infere([
-# #     [0, 1, N, 1],
-# #     [1, N, N, N],
-# #     [N, N, N, N],
-# #     [1, N, N, N]
-# # ])
-
-# S1.infere_and_reduce([
-#     [0, 3, N, 1],
-#     [1, N, N, N],
-#     [N, N, N, N],
-#     [N, N, N, N]
-# ])
-# wfc(S1)
-# S1.view()
-
-
-# --------------------- Test 2 ----------------------
-success = 0
-n = 100000
-for i in range(n):
-    sys.stdout.write("\x1b[1A\x1b[2K")
-    S1 = Sudoku(3)
-    if wfc(S1):
-        success += 1
-    print(f"\033[94m{np.round(i/n * 100)}%\033[0m")
-
-pourcent = success / n * 100
-print(f"Le sudoku est resolu \033[92m{pourcent}%\033[0m du temps")
+    return not contraditcion

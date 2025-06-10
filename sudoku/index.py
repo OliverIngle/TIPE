@@ -1,5 +1,6 @@
 from sudoku import *
 import sys
+import time
 
 
 
@@ -226,10 +227,9 @@ import sys
 # wfc_rand(S1)
 
 # ------------------- Ex 3 -------------
-
+print("hi")
 N = None
 S = Sudoku()
-gap()
 
 S.grid = [
         [N, N, N,   N, N, N,   N, N, N],
@@ -245,4 +245,8 @@ S.grid = [
         [N, N, N,   N, N, N,   N, N, N]
 ]
 
+t1 = time.time()
 wfc_rand(S)
+t2 = time.time()
+print(t2 - t1)
+S.display()

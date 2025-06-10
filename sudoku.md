@@ -206,9 +206,127 @@ def wfc_stop(S: Sudoku):
 ```
 
 
-## Questions a approfondir?
+# Un algithme corrigé et optimisé
 
-- Dans le cas ou il n'y a aucun choix 'sur'(ie une entropie de 1), est il toujours meilleur de choisir aléatoirement dans la case qui a les moin d'entropie?
+Recodage intégral de l'algothme avec un moteur Sudokus repensé.
+
+- Adaptée a toute taille de sudokus
+```python
+class Sudoku:
+    def __init__(self, n):
+        self.n = n
+        self.s = n * n
+        self.grid = [ [None for _ in range(self.s)] for _ in range(self.s) ]
+        self.entropies = [ [[i for i in range(self.s)] for _ in range(self.s)] for _ in range(self.s)]
+```
+- Réduction des entropies optimisé
+```python
+def place_and_reduce(self, i, j, n):
+    self.grid[i][j] = n
+    coords = self.box_coords(i, j)
+    for k in range(self.s):
+        self.entropies[i][k] = reduce(self.entropies[i][k], n)
+        self.entropies[k][j] = reduce(self.entropies[k][j], n)
+        (x, y) = coords[k]
+        self.entropies[x][y] = reduce(self.entropies[x][y], n)
+    self.entropies[i][j] = []
+```
+- Choix aléatoire parmi cases a entropie égale
+```python
+def wfc_min_entropy(S):
+    s = S.s
+    tag = True
+    contraditcion = False
+    while tag:
+        tag = False
+        min_entropy = s
+        min_entropy_coords = []
+        for i in range(s):
+            for j in range(s):
+                entropies = S.entropies[i][j]
+                n_entropies = len(entropies)
+                if n_entropies == 0:
+                    if S.grid[i][j] == None:
+                        S.force_place(i, j, "\033[31;1mC\033[0m")
+                        contraditcion = True
+                    continue
+                elif n_entropies == 1:
+                    S.place_and_reduce(i, j, entropies[0])
+                    tag = True
+                    break
+                elif n_entropies == min_entropy:
+                    min_entropy_coords.append((i, j))
+                elif n_entropies < min_entropy:
+                    min_entropy = n_entropies
+                    min_entropy_coords = [(i, j)]
+            if tag or contraditcion:
+                break
+        if tag or min_entropy_coords == [] or contraditcion:
+            continue
+        r = random.randint(0, len(min_entropy_coords) - 1)
+        (x, y) = min_entropy_coords[r]
+        r2 = random.randint(0, min_entropy - 1)
+        el = S.entropies[x][y][r2]
+        S.place_and_reduce(x, y, el)
+        tag = True
+
+    return not contraditcion
+```
+- Meilleu affichage
+```python
+def serealize(self):
+    s = ""
+    for col in self.grid:
+        for x in col:
+            if x == None:
+                s += ". "
+                continue
+            s += f"{x} "
+        s += "\n"
+    s += "\n"
+    for col in self.entropies:
+        for l in col:
+            x = len(l)
+            if x == 0:
+                s += "- "
+                continue
+            s += f"{x} "
+        s += "\n"
+    return s
+
+def view(self):
+    s = self.serealize()
+    sys.stdout.write(s)
+
+def update_view(self):
+    for _ in range(self.s * 2 + 2):
+        sys.stdout.write("\x1b[1A\x1b[2K")
+    self.view()
+```
+
+**Résultat**: Résolution sudoku 9x9 600 fois plus rapide (2.3s vs 0.0036s)!
+
+## Tests
+
+```json
+Test: comparaison heuristique choix entropie min/max avec une grille vide
+Parametres:
+Grilles:            4 x 4
+Nombre d'essais:    100000
 
 
+Version choix de l'entropie minimale
+Progrés:            100.%
 
+
+Le sudoku est resolu 95.333% du temps (95333).
+En moyene, wfc resolve 15.78991/16 cases.
+
+
+Version choix de l'entropie maximale
+Progrés:            100.%
+
+
+Le sudoku est resolu 57.175% du temps (57175).
+En moyene, wfc resolve 12.55557/16 cases.
+```

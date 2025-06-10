@@ -205,9 +205,8 @@ def wfc_rand(S: Sudoku):
             S.set_tile(x, y, S.possibilities[x][y][i])
 
         S.update_possibilities()
-        wipelines(20)
-        printstd(S.serealize())
-        input()
+        # wipelines(20)
+        # printstd(S.serealize())
             
 
 
