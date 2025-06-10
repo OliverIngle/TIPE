@@ -307,6 +307,8 @@ def update_view(self):
 **Résultat**: Résolution sudoku 9x9 600 fois plus rapide (2.3s vs 0.0036s)!
 
 ## Tests
+### Comparaison choix entropie minimale/maximale, grille vide
+#### Sudokus 4x4
 
 ```json
 Test: comparaison heuristique choix entropie min/max avec une grille vide
@@ -329,4 +331,88 @@ Progrés:            100.%
 
 Le sudoku est resolu 57.175% du temps (57175).
 En moyene, wfc resolve 12.55557/16 cases.
+```
+#### Sudokus 9x9
+```json
+Test: comparaison heuristique choix entropie min/max avec une grille vide
+Parametres:
+Grilles:            9 x 9
+Nombre d'essais:    10000
+
+
+Version choix de l'entropie minimale
+Progrés:            100.%
+
+
+Le sudoku est resolu 56.06% du temps (5606).
+En moyene, wfc resolve 64.5301/81 cases.
+
+
+Version choix de l'entropie maximale
+Progrés:            100.%
+
+Le sudoku est resolu 0.02% du temps (2).
+En moyene, wfc resolve 33.7432/81 cases.
+```
+
+#### Sudokus 16x16
+
+```json
+Test: comparaison heuristique choix entropie min/max avec une grille vide
+Parametres:
+Grilles:            16 x 16
+Nombre d'essais:    1000
+
+
+Version choix de l'entropie minimale
+Progrés:            100.%
+
+
+Le sudoku est resolu 2.5% du temps (25).
+En moyene, wfc resolve 97.104/256 cases.
+
+
+Version choix de l'entropie maximale
+Progrés:            100.%
+
+
+Le sudoku est resolu 0.0% du temps (0).
+En moyene, wfc resolve 112.034/256 cases.
+```
+### Grille peu remplie
+
+```
+. . . . . . 0 . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . 0 .
+. . . . . . . . .
+0 . . . . . . . .
+. . . 0 . . . . .
+. . . . . . . . .
+```
+#### Résultat
+
+```json
+Test: comparaison heuristique choix entropie min/max avec une grille vide
+Parametres:
+Grilles:            9 x 9
+Nombre d'essais:    10000
+
+
+Version choix de l'entropie minimale
+Progrés:            100.%
+
+
+Le sudoku est resolu 56.81% du temps (5681).
+En moyene, wfc resolve 66.9731/81 cases.
+
+
+Version choix de l'entropie maximale
+Progrés:            100.%
+
+
+Le sudoku est resolu 0.0% du temps (0).
+En moyene, wfc resolve 33.729/81 cases.
 ```

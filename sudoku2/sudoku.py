@@ -157,7 +157,7 @@ def wfc_min_entropy(S):
             if tag or contraditcion:
                 break
         if tag or min_entropy_coords == [] or contraditcion:
-            # S.update_view()
+            S.update_view()                                     # Display code
             continue
         r = random.randint(0, len(min_entropy_coords) - 1)
         (x, y) = min_entropy_coords[r]
@@ -166,7 +166,7 @@ def wfc_min_entropy(S):
         S.place_and_reduce(x, y, el)
         tag = True
         # input()
-        # S.update_view()
+        S.update_view()                                         # Display code
 
     return not contraditcion
 
@@ -200,7 +200,7 @@ def wfc_max_entropy(S):
             if tag or contraditcion:
                 break
         if tag or max_entropy_coords == [] or contraditcion:
-            # S.update_view()
+            S.update_view()                                         # Display code
             continue
         r = random.randint(0, len(max_entropy_coords) - 1)
         (x, y) = max_entropy_coords[r]
@@ -209,6 +209,6 @@ def wfc_max_entropy(S):
         S.place_and_reduce(x, y, el)
         tag = True
         # input()
-        # S.update_view()
+        S.update_view()                                             # Display code
 
     return not contraditcion
