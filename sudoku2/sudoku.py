@@ -126,7 +126,24 @@ class Sudoku:
                 if el in possibles:
                     completed += 1
         return completed
+    
+    def force_remove(self, i, j):
+        self.force_place(i, j, None)
 
+    def remove_and_augment(self, i, j):
+        new_grid = self.grid
+        new_grid[i][j] = None
+        self.entropies = [ [[i for i in range(self.s)] for _ in range(self.s)] for _ in range(self.s)]
+        self.infere_and_reduce(new_grid)
+        
+
+
+
+
+
+
+
+# --------------- wfc ----------------
 
 def wfc_min_entropy(S):
     s = S.s
@@ -157,7 +174,8 @@ def wfc_min_entropy(S):
             if tag or contraditcion:
                 break
         if tag or min_entropy_coords == [] or contraditcion:
-            S.update_view()                                     # Display code
+            # S.update_view()                                     # Display code
+            # input()                                             # View steps
             continue
         r = random.randint(0, len(min_entropy_coords) - 1)
         (x, y) = min_entropy_coords[r]
@@ -165,8 +183,8 @@ def wfc_min_entropy(S):
         el = S.entropies[x][y][r2]
         S.place_and_reduce(x, y, el)
         tag = True
-        # input()
-        S.update_view()                                         # Display code
+        # S.update_view()                                         # Display code
+        # input()                                                 # View steps
 
     return not contraditcion
 
@@ -200,7 +218,8 @@ def wfc_max_entropy(S):
             if tag or contraditcion:
                 break
         if tag or max_entropy_coords == [] or contraditcion:
-            S.update_view()                                         # Display code
+            # S.update_view()                                         # Display code
+            # input()                                                 # View steps
             continue
         r = random.randint(0, len(max_entropy_coords) - 1)
         (x, y) = max_entropy_coords[r]
@@ -208,7 +227,7 @@ def wfc_max_entropy(S):
         el = S.entropies[x][y][r2]
         S.place_and_reduce(x, y, el)
         tag = True
-        # input()
-        S.update_view()                                             # Display code
+        # S.update_view()                                             # Display code
+        # input()                                                     # View steps
 
     return not contraditcion

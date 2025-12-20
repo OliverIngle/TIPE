@@ -416,3 +416,7 @@ Progrés:            100.%
 Le sudoku est resolu 0.0% du temps (0).
 En moyene, wfc resolve 33.729/81 cases.
 ```
+
+questions:
+- systeme lineaires: bon ou mauvais modele?
+- grille quasi remplie (sauf un bloc): modelisation

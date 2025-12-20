@@ -56,63 +56,71 @@ N = None
 # print(S.number_of_completed())
 
 
+
+
 # ------------ Test 1 - Grilles n x n vides, comparaion max/min entropy ------------
 
-# n = 1000
-# dimension = 4
-# max_entropie_successes = 0
-# min_entropie_successes = 0
 
-# max_entropie_completion = 0
-# min_entropie_completion = 0
 
-# print("\n\n")
-# print("Test: comparaison heuristique choix entropie min/max avec une grille vide")
-# print("Parametres:")
-# print(f"Grilles:            {dimension**2} x {dimension**2}")
-# print(f"Nombre d'essais:    {n}")
-# print("\n")
+n = 10000000
+dimension = 2
+max_entropie_successes = 0
+min_entropie_successes = 0
 
-# print("Version choix de l'entropie minimale\n")
-# for i in range(n):
-#     S = Sudoku(dimension)
-#     success = wfc_min_entropy(S)
-#     if success:
-#         min_entropie_successes += 1
-#     min_entropie_completion += S.number_of_completed()
-#     sys.stdout.write("\x1b[1A\x1b[2K")
-#     p = np.format_float_positional(i/n * 100, precision=1)
-#     print(f"Progrés:            \033[94m{p}%\033[0m")
+max_entropie_completion = 0
+min_entropie_completion = 0
 
-# print("\n")
+print("\n\n")
+print("Test: comparaison heuristique choix entropie min/max avec une grille vide")
+print("Parametres:")
+print(f"Grilles:            {dimension**2} x {dimension**2}")
+print(f"Nombre d'essais:    {n}")
+print("\n")
 
-# min_entropie_successes_pourcent = min_entropie_successes / n * 100
-# min_entropie_competion_avg = min_entropie_completion / n
+print("Version choix de l'entropie minimale\n")
+for i in range(n):
+    S = Sudoku(dimension)
+    success = wfc_min_entropy(S)
+    if success:
+        min_entropie_successes += 1
+    min_entropie_completion += S.number_of_completed()
+    sys.stdout.write("\x1b[1A\x1b[2K")
+    p = np.format_float_positional(i/n * 100, precision=1)
+    print(f"Progrés:            \033[94m{p}%\033[0m")
 
-# print(f"Le sudoku est resolu \033[92m{min_entropie_successes_pourcent}%\033[0m du temps ({min_entropie_successes}).")
-# print(f"En moyene, wfc resolve \033[93m{min_entropie_competion_avg}/{dimension**4}\033[0m cases.")
+print("\n")
 
-# print("\n")
-# print("Version choix de l'entropie maximale\n")
+min_entropie_successes_pourcent = min_entropie_successes / n * 100
+min_entropie_competion_avg = min_entropie_completion / n
 
-# for i in range(n):
-#     S = Sudoku(dimension)
-#     success = wfc_max_entropy(S)
-#     if success:
-#         max_entropie_successes += 1
-#     max_entropie_completion += S.number_of_completed()
-#     sys.stdout.write("\x1b[1A\x1b[2K")
-#     p = np.format_float_positional(i/n * 100, precision=1)
-#     print(f"Progrés:            \033[94m{p}%\033[0m")
+print(f"Le sudoku est resolu \033[92m{min_entropie_successes_pourcent}%\033[0m du temps ({min_entropie_successes}).")
+print(f"En moyene, wfc resolve \033[93m{min_entropie_competion_avg}/{dimension**4}\033[0m cases.")
 
-# max_entropie_successes_pourcent = max_entropie_successes / n * 100
-# max_entropie_competion_avg = max_entropie_completion / n
+print("\n")
+print("Version choix de l'entropie maximale\n")
 
-# print("\n")
-# print(f"Le sudoku est resolu \033[92m{max_entropie_successes_pourcent}%\033[0m du temps ({max_entropie_successes}).")
-# print(f"En moyene, wfc resolve \033[93m{max_entropie_competion_avg}/{dimension**4}\033[0m cases.")
+for i in range(n):
+    S = Sudoku(dimension)
+    success = wfc_max_entropy(S)
+    if success:
+        max_entropie_successes += 1
+    max_entropie_completion += S.number_of_completed()
+    sys.stdout.write("\x1b[1A\x1b[2K")
+    p = np.format_float_positional(i/n * 100, precision=1)
+    print(f"Progrés:            \033[94m{p}%\033[0m")
 
-# ------------ Test 2 - idem avec grille commencé.
+max_entropie_successes_pourcent = max_entropie_successes / n * 100
+max_entropie_competion_avg = max_entropie_completion / n
+
+print("\n")
+print(f"Le sudoku est resolu \033[92m{max_entropie_successes_pourcent}%\033[0m du temps ({max_entropie_successes}).")
+print(f"En moyene, wfc resolve \033[93m{max_entropie_competion_avg}/{dimension**4}\033[0m cases.")
+
+
+
+# ------------ Test 2 - idem avec grille commencé ------------
+
+
 
 # n = 10000
 # dimension = 3
@@ -186,22 +194,131 @@ N = None
 
 # ------ Sous test ------
 
-grille = [
-        [N, N, N,   N, N, N,   0, N, N],
-        [N, N, N,   N, N, N,   N, N, N],
-        [N, N, N,   N, N, N,   N, N, N],
+# grille = [
+#         [N, N, N,   N, N, N,   0, N, N],
+#         [N, N, N,   N, N, N,   N, N, N],
+#         [N, N, N,   N, N, N,   N, N, N],
 
-        [N, N, N,   N, N, N,   N, N, N],
-        [N, N, N,   N, N, N,   N, 0, N],
-        [N, N, N,   N, N, N,   N, N, N],
+#         [N, N, N,   N, N, N,   N, N, N],
+#         [N, N, N,   N, N, N,   N, 0, N],
+#         [N, N, N,   N, N, N,   N, N, N],
 
-        [0, N, N,   N, N, N,   N, N, N],
-        [N, N, N,   0, N, N,   N, N, N],
-        [N, N, N,   N, N, N,   N, N, N]
-]
+#         [0, N, N,   N, N, N,   N, N, N],
+#         [N, N, N,   0, N, N,   N, N, N],
+#         [N, N, N,   N, N, N,   N, N, N]
+# ]
 
-for _ in range(100):
-    S = Sudoku(3)
-    S.infere_and_reduce(grille)
-    wfc_max_entropy(S)
-    input()
+# for _ in range(100):
+#     S = Sudoku(3)
+#     S.infere_and_reduce(grille)
+#     wfc_max_entropy(S)
+#     input()
+
+
+
+
+# ------------ Test 3 : Créations de sudokus -------------
+
+# S = Sudoku(3)
+
+# grid = [
+#         [7, 4, 3, 0, 2, 6, 5, 1, 8],
+#         [8, 0, 2, 5, 4, 1, 3, 6, 7],
+#         [1, 6, 5, 8, 7, 3, 4, 0, 2],
+#         [3, 5, 7, 1, 8, 4, 0, 2, 6],
+#         [0, 8, 6, 2, 3, 7, 1, 5, 4],
+#         [2, 1, 4, 6, 5, 0, 8, 7, 3],
+#         [6, 7, 8, 3, 1, 5, 2, 4, 0],
+#         [4, 3, 1, 7, 0, 2, 6, 8, 5],
+#         [5, 2, 0, 4, 6, 8, 7, 3, 1]
+# ]
+
+# S.infere_and_reduce(grid)
+
+# S.view()
+
+# while True:
+#     try:
+#         coords = input()
+#         if coords == "s":
+#             print(S.grid)
+#             break
+#         x = int(coords[0])
+#         y = int(coords[1])
+#         S.remove_and_augment(x, y)
+#         S.update_view()
+#     except:
+#         continue
+
+
+# ------------ Test 4 - Sudok ubien complété ------------
+
+
+
+# grid = [
+#     [None, None, None, None, None, None, None, None, None],
+#     [None, None, None, None, None, None, None, None, None],
+#     [1, 6, 5, 8, 7, 3, 4, 0, 2],
+#     [3, 5, 7, 1, 8, 4, 0, 2, 6],
+#     [0, 8, 6, 2, 3, 7, 1, 5, 4],
+#     [2, 1, 4, 6, 5, 0, 8, 7, 3],
+#     [6, 7, 8, 3, 1, 5, 2, 4, 0],
+#     [4, 3, 1, 7, 0, 2, 6, 8, 5],
+#     [5, 2, 0, 4, 6, 8, 7, 3, 1]
+# ]
+
+# n = 5
+# dimension = 3
+# max_entropie_successes = 0
+# min_entropie_successes = 0
+
+# max_entropie_completion = 0
+# min_entropie_completion = 0
+
+# # print("\n\n")
+# # print("Test: comparaison heuristique choix entropie min/max avec une grille vide")
+# # print("Parametres:")
+# # print(f"Grilles:            {dimension**2} x {dimension**2}")
+# # print(f"Nombre d'essais:    {n}")
+# # print("\n")
+
+# # print("Version choix de l'entropie minimale\n")
+# for i in range(n):
+#     S = Sudoku(dimension)
+#     S.infere_and_reduce(grid)
+#     success = wfc_min_entropy(S)
+#     if success:
+#         min_entropie_successes += 1
+#     min_entropie_completion += S.number_of_completed()
+#     # sys.stdout.write("\x1b[1A\x1b[2K")
+#     p = np.format_float_positional(i/n * 100, precision=1)
+#     # print(f"Progrés:            \033[94m{p}%\033[0m")
+
+# # print("\n")
+
+# min_entropie_successes_pourcent = min_entropie_successes / n * 100
+# min_entropie_competion_avg = min_entropie_completion / n
+
+# # print(f"Le sudoku est resolu \033[92m{min_entropie_successes_pourcent}%\033[0m du temps ({min_entropie_successes}).")
+# # print(f"En moyene, wfc resolve \033[93m{min_entropie_competion_avg}/{dimension**4}\033[0m cases.")
+
+# # print("\n")
+# # print("Version choix de l'entropie maximale\n")
+
+# for i in range(n):
+#     S = Sudoku(dimension)
+#     S.infere_and_reduce(grid)
+#     success = wfc_max_entropy(S)
+#     if success:
+#         max_entropie_successes += 1
+#     max_entropie_completion += S.number_of_completed()
+#     # sys.stdout.write("\x1b[1A\x1b[2K")
+#     p = np.format_float_positional(i/n * 100, precision=1)
+#     # print(f"Progrés:            \033[94m{p}%\033[0m")
+
+# max_entropie_successes_pourcent = max_entropie_successes / n * 100
+# max_entropie_competion_avg = max_entropie_completion / n
+
+# # print("\n")
+# # print(f"Le sudoku est resolu \033[92m{max_entropie_successes_pourcent}%\033[0m du temps ({max_entropie_successes}).")
+# # print(f"En moyene, wfc resolve \033[93m{max_entropie_competion_avg}/{dimension**4}\033[0m cases.")
